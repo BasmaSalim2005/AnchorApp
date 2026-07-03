@@ -1,0 +1,73 @@
+<div class="tab">
+  @if (selected(); as s) {
+    <button class="btn btn-ghost btn-sm back" (click)="back()">‹ Back to shared</button>
+    <app-person-view [ownerId]="s.ownerId" [username]="s.ownerUsername" />
+  } @else {
+    <div class="tab-head">
+      <div>
+        <h2>Shared</h2>
+        <p class="sub">Let someone follow your habits, or check on habits shared with you.</p>
+      </div>
+    </div>
+
+    @if (loading()) {
+      <p class="muted">Loading…</p>
+    } @else {
+      <!-- People who shared their habits with me -->
+      <section class="block">
+        <h3>Shared with me</h3>
+        @if (incoming().length === 0) {
+          <p class="muted small">No one has shared their habits with you yet.</p>
+        } @else {
+          <div class="people">
+            @for (s of incoming(); track s.id) {
+              <div class="person card">
+                <button class="person-main" (click)="open(s)">
+                  <span class="ava">{{ s.ownerUsername.charAt(0).toUpperCase() }}</span>
+                  <span class="who">
+                    <span class="u">{{ s.ownerUsername }}</span>
+                    <span class="meta">{{ s.habitCount }} habit(s) · tap to view year</span>
+                  </span>
+                </button>
+                <button class="link-danger" (click)="leave(s)" title="Remove">✕</button>
+              </div>
+            }
+          </div>
+        }
+      </section>
+
+      <!-- Share my habits -->
+      <section class="block">
+        <h3>Share my habits</h3>
+        <p class="muted small">
+          Enter someone's username to give them read-only access to your habits and schedules
+          (e.g. a parent, coach or friend).
+        </p>
+        <div class="share-row">
+          <input
+            class="input"
+            [(ngModel)]="shareUsername"
+            placeholder="their username"
+            (keyup.enter)="share()"
+          />
+          <button class="btn btn-primary" (click)="share()" [disabled]="busy()">
+            {{ busy() ? 'Sharing…' : 'Share' }}
+          </button>
+        </div>
+        @if (error()) { <p class="error-text">{{ error() }}</p> }
+        @if (notice()) { <p class="notice">{{ notice() }}</p> }
+
+        @if (outgoing().length > 0) {
+          <div class="chips">
+            @for (s of outgoing(); track s.id) {
+              <span class="chip">
+                {{ s.viewer_username }}
+                <button (click)="revoke(s)" title="Stop sharing">✕</button>
+              </span>
+            }
+          </div>
+        }
+      </section>
+    }
+  }
+</div>

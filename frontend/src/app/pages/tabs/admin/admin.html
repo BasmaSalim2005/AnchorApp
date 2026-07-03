@@ -1,0 +1,94 @@
+<div class="tab">
+  @if (selected(); as u) {
+    <button class="btn btn-ghost btn-sm back" (click)="back()">‹ Back to admin</button>
+    <app-person-view [ownerId]="u.id" [username]="u.username" />
+  } @else {
+    <div class="tab-head">
+      <div>
+        <h2>Admin</h2>
+        <p class="sub">All users, their activity, and sharing links.</p>
+      </div>
+    </div>
+
+    @if (loading()) {
+      <p class="muted">Loading…</p>
+    } @else if (error()) {
+      <p class="error-text">{{ error() }}</p>
+    } @else {
+      <div class="stats">
+        <div class="stat card"><strong>{{ users().length }}</strong><span>users</span></div>
+        <div class="stat card"><strong>{{ shares().length }}</strong><span>shares</span></div>
+      </div>
+
+      <div class="table-wrap card">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Email</th>
+              <th>Joined</th>
+              <th class="num">Habits</th>
+              <th class="num">Done</th>
+              <th>Last active</th>
+              <th>Role</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (u of users(); track u.id) {
+              <tr>
+                <td>
+                  <button class="uname" (click)="view(u)">{{ u.username }}</button>
+                  @if (u.id === me) { <span class="you">you</span> }
+                </td>
+                <td class="dim">{{ u.email }}</td>
+                <td class="dim">{{ u.createdAt | date: 'mediumDate' }}</td>
+                <td class="num">{{ u.habitCount }}</td>
+                <td class="num">{{ u.completionCount }}</td>
+                <td class="dim">{{ u.lastActivity ? (u.lastActivity | date: 'MMM d') : '—' }}</td>
+                <td>
+                  <span class="role" [class.admin]="u.role === 'admin'">{{ u.role }}</span>
+                </td>
+                <td class="actions">
+                  <button class="mini" (click)="view(u)" title="View schedules">👁</button>
+                  @if (u.id !== me) {
+                    <button class="mini" (click)="toggleRole(u)" [title]="u.role === 'admin' ? 'Remove admin' : 'Make admin'">
+                      {{ u.role === 'admin' ? '↓' : '★' }}
+                    </button>
+                    <button class="mini danger" (click)="removeUser(u)" title="Delete user">🗑</button>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <section class="link-block">
+        <h3>Link two accounts</h3>
+        <p class="muted small">
+          Give one person read-only access to another's habits (e.g. a parent viewing a child).
+          Enter the owner (whose habits are viewed) and the viewer.
+        </p>
+        <div class="link-row">
+          <input class="input" [(ngModel)]="ownerU" placeholder="owner username" />
+          <span class="arrow">→ seen by →</span>
+          <input class="input" [(ngModel)]="viewerU" placeholder="viewer username" />
+          <button class="btn btn-primary" (click)="link()" [disabled]="linkBusy()">Link</button>
+        </div>
+        @if (linkError()) { <p class="error-text">{{ linkError() }}</p> }
+
+        @if (shares().length > 0) {
+          <div class="share-list">
+            @for (s of shares(); track s.id) {
+              <div class="share-item">
+                <span><strong>{{ s.viewer_username }}</strong> can view <strong>{{ s.owner_username }}</strong></span>
+                <button class="mini danger" (click)="unlink(s.id)" title="Remove">✕</button>
+              </div>
+            }
+          </div>
+        }
+      </section>
+    }
+  }
+</div>

@@ -13,6 +13,9 @@ import { pool } from './db/pool.js';
 import authRoutes from './routes/auth.js';
 import habitRoutes from './routes/habits.js';
 import logRoutes from './routes/logs.js';
+import adminRoutes from './routes/admin.js';
+import shareRoutes from './routes/shares.js';
+import viewRoutes from './routes/view.js';
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
@@ -69,6 +72,9 @@ app.get('/api/health/db', async (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/habits', habitRoutes);
 app.use('/api/logs', logRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/shares', shareRoutes);
+app.use('/api/view', viewRoutes);
 
 // 404 for unknown API routes
 app.use('/api', (req, res) => res.status(404).json({ error: 'Not found' }));

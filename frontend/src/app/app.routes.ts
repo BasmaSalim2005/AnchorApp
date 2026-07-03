@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { authGuard, guestGuard } from './core/auth.guard';
+import { authGuard, guestGuard, adminGuard } from './core/auth.guard';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'app/daily' },
@@ -31,6 +31,15 @@ export const routes: Routes = [
       {
         path: 'yearly',
         loadComponent: () => import('./pages/tabs/yearly/yearly').then((m) => m.Yearly),
+      },
+      {
+        path: 'shared',
+        loadComponent: () => import('./pages/tabs/shared/shared').then((m) => m.Shared),
+      },
+      {
+        path: 'admin',
+        canActivate: [adminGuard],
+        loadComponent: () => import('./pages/tabs/admin/admin').then((m) => m.Admin),
       },
     ],
   },

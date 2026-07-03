@@ -1,0 +1,54 @@
+<div class="pv">
+  <div class="pv-head">
+    <h3>{{ username }}'s year</h3>
+    <div class="period-nav">
+      <button type="button" (click)="prev()" aria-label="Previous year">‹</button>
+      <span class="label">{{ year() }}</span>
+      <button type="button" (click)="next()" aria-label="Next year">›</button>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <p class="muted">Loading…</p>
+  } @else if (error()) {
+    <p class="error-text">{{ error() }}</p>
+  } @else if (habits().length === 0) {
+    <p class="muted">This user hasn't added any habits yet.</p>
+  } @else {
+    <div class="pv-list">
+      @for (h of habits(); track h.id) {
+        <div class="pv-card card">
+          <header class="pv-card-head">
+            <span class="dot" [style.background]="h.color">{{ h.icon }}</span>
+            <span class="nm">{{ h.name }}</span>
+            <span class="cnt"><strong [style.color]="h.color">{{ yearCount(h) }}</strong> days</span>
+          </header>
+          <div class="heatmap-scroll">
+            <div class="heatmap">
+              <div class="months">
+                @for (lbl of monthLabels(); track lbl.col) {
+                  <span class="m-lbl" [style.grid-column]="lbl.col + 1">{{ lbl.name }}</span>
+                }
+              </div>
+              <div class="weeks">
+                @for (week of weeks(); track $index) {
+                  <div class="week">
+                    @for (cell of week; track cell.key) {
+                      <span
+                        class="sq"
+                        [class.out]="!cell.inYear"
+                        [class.today]="cell.isToday"
+                        [style.background]="cell.inYear && isDone(h, cell.key) ? h.color : null"
+                        [title]="cell.key"
+                      ></span>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

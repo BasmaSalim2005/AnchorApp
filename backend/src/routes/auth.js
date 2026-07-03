@@ -7,7 +7,7 @@ import { EMAIL, USERNAME, passwordIssue } from '../utils/validate.js';
 const router = Router();
 
 function publicUser(row) {
-  return { id: row.id, username: row.username, email: row.email };
+  return { id: row.id, username: row.username, email: row.email, role: row.role || 'user' };
 }
 
 // POST /api/auth/register  { username, email, password }
@@ -43,7 +43,7 @@ router.post('/register', async (req, res, next) => {
     const { rows } = await query(
       `INSERT INTO users (username, email, password_hash)
        VALUES ($1, $2, $3)
-       RETURNING id, username, email`,
+       RETURNING id, username, email, role`,
       [username, email, passwordHash]
     );
 
@@ -68,7 +68,7 @@ router.post('/login', async (req, res, next) => {
     }
 
     const { rows } = await query(
-      'SELECT id, username, email, password_hash FROM users WHERE lower(username) = lower($1)',
+      'SELECT id, username, email, role, password_hash FROM users WHERE lower(username) = lower($1)',
       [username]
     );
     const user = rows[0];
@@ -100,7 +100,7 @@ router.post('/logout', (req, res) => {
 router.get('/me', requireAuth, async (req, res, next) => {
   try {
     const { rows } = await query(
-      'SELECT id, username, email FROM users WHERE id = $1',
+      'SELECT id, username, email, role FROM users WHERE id = $1',
       [req.session.userId]
     );
     if (!rows[0]) {

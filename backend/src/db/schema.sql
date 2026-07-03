@@ -19,6 +19,34 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE UNIQUE INDEX IF NOT EXISTS users_username_lower_idx ON users (lower(username));
 CREATE UNIQUE INDEX IF NOT EXISTS users_email_lower_idx ON users (lower(email));
 
+-- Role: 'user' or 'admin'. Added via ALTER so existing databases upgrade cleanly.
+ALTER TABLE users ADD COLUMN IF NOT EXISTS role VARCHAR(10) NOT NULL DEFAULT 'user';
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.constraint_column_usage
+    WHERE table_name = 'users' AND constraint_name = 'users_role_check'
+  ) THEN
+    ALTER TABLE users ADD CONSTRAINT users_role_check CHECK (role IN ('user', 'admin'));
+  END IF;
+END $$;
+
+-- ---------------------------------------------------------------------------
+-- Habit shares: owner grants a viewer read-only access to their habits.
+-- ---------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS habit_shares (
+    id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    owner_id   UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    viewer_id  UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    created_by UUID REFERENCES users(id) ON DELETE SET NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    UNIQUE (owner_id, viewer_id),
+    CHECK (owner_id <> viewer_id)
+);
+
+CREATE INDEX IF NOT EXISTS habit_shares_viewer_idx ON habit_shares (viewer_id);
+CREATE INDEX IF NOT EXISTS habit_shares_owner_idx ON habit_shares (owner_id);
+
 -- ---------------------------------------------------------------------------
 -- Habits
 -- ---------------------------------------------------------------------------

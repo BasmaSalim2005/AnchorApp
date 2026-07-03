@@ -11,6 +11,7 @@ export class AuthService {
 
   readonly user = signal<User | null>(null);
   readonly isLoggedIn = computed(() => this.user() !== null);
+  readonly isAdmin = computed(() => this.user()?.role === 'admin');
 
   /** Called once at startup to restore an existing session. */
   async loadSession(): Promise<void> {

@@ -2,6 +2,53 @@ export interface User {
   id: string;
   username: string;
   email: string;
+  role: 'user' | 'admin';
+}
+
+export interface AdminUser {
+  id: string;
+  username: string;
+  email: string;
+  role: 'user' | 'admin';
+  createdAt: string;
+  habitCount: number;
+  completionCount: number;
+  lastActivity: string | null;
+}
+
+export interface ShareIn {
+  id: string;
+  ownerId: string;
+  ownerUsername: string;
+  habitCount: number;
+  createdAt: string;
+}
+
+export interface ShareOut {
+  id: string;
+  viewer_id: string;
+  viewer_username: string;
+  created_at: string;
+}
+
+// A habit as returned by the read-only /view endpoints (no editing fields).
+export interface ViewHabit {
+  id: string;
+  name: string;
+  color: string;
+  icon: string;
+  frequency: Frequency;
+  targetCount: number;
+  unit: string | null;
+  targetQuantity: number | null;
+  createdAt: string;
+}
+
+export interface ViewLog {
+  habitId: string;
+  date: string;
+  completed: boolean;
+  quantity: number | null;
 }
 
 export type Frequency = 'daily' | 'weekly' | 'monthly';

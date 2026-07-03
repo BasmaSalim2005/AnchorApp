@@ -1,0 +1,102 @@
+.pv-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.pv-head h3 {
+  color: var(--marine);
+  font-size: 1.15rem;
+}
+
+.pv-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pv-card {
+  padding: 14px 16px;
+}
+
+.pv-card-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.pv-card-head .dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-size: 0.95rem;
+}
+
+.pv-card-head .nm {
+  font-weight: 700;
+  color: var(--marine);
+}
+
+.pv-card-head .cnt {
+  margin-left: auto;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.heatmap-scroll {
+  overflow-x: auto;
+  padding-bottom: 6px;
+}
+
+.heatmap {
+  display: inline-block;
+  min-width: max-content;
+  --sq: 12px;
+  --gap: 3px;
+}
+
+.months {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: repeat(53, calc(var(--sq) + var(--gap)));
+  height: 15px;
+}
+
+.m-lbl {
+  font-size: 0.64rem;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.weeks {
+  display: flex;
+  gap: var(--gap);
+}
+
+.week {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+.sq {
+  width: var(--sq);
+  height: var(--sq);
+  border-radius: 3px;
+  background: #e9edf2;
+}
+
+.sq.out {
+  visibility: hidden;
+}
+
+.sq.today {
+  outline: 2px solid var(--anchor-red);
+  outline-offset: 1px;
+}

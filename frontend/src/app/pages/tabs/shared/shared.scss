@@ -1,0 +1,130 @@
+.back {
+  margin-bottom: 14px;
+}
+
+.block {
+  margin-bottom: 28px;
+}
+
+.block h3 {
+  color: var(--marine);
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.small {
+  font-size: 0.88rem;
+}
+
+.people {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.person {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  gap: 8px;
+}
+
+.person-main {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  border: none;
+  background: transparent;
+  flex: 1;
+  text-align: left;
+  padding: 2px;
+}
+
+.ava {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--marine);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  flex: none;
+}
+
+.who {
+  display: flex;
+  flex-direction: column;
+}
+
+.who .u {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.who .meta {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.share-row {
+  display: flex;
+  gap: 10px;
+  margin: 12px 0 6px;
+  max-width: 460px;
+}
+
+.share-row .input {
+  flex: 1;
+}
+
+.notice {
+  color: var(--ok);
+  font-size: 0.85rem;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #eef4ff;
+  color: var(--marine);
+  border-radius: 20px;
+  padding: 5px 6px 5px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.chip button {
+  border: none;
+  background: rgba(11, 42, 74, 0.12);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  color: var(--marine);
+  font-size: 0.7rem;
+  line-height: 1;
+}
+
+.link-danger {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.9rem;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  flex: none;
+}
+
+.link-danger:hover {
+  background: var(--anchor-red-soft);
+  color: var(--anchor-red);
+}
