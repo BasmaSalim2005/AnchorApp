@@ -14,7 +14,17 @@ if (!process.env.DATABASE_URL) {
   );
 }
 
-const useSsl = String(process.env.DATABASE_SSL).toLowerCase() === 'true';
+// Decide whether to use SSL. Managed Postgres (Supabase, Neon, Render, RDS, etc.)
+// requires SSL. We enable it unless explicitly disabled, so a missing
+// DATABASE_SSL env var in production doesn't silently break the connection.
+const url = process.env.DATABASE_URL || '';
+const sslExplicitlyOff = String(process.env.DATABASE_SSL).toLowerCase() === 'false';
+const useSsl =
+  !sslExplicitlyOff &&
+  (String(process.env.DATABASE_SSL).toLowerCase() === 'true' ||
+    process.env.NODE_ENV === 'production' ||
+    /sslmode=require/i.test(url) ||
+    /supabase\.|neon\.tech|render\.com|amazonaws\.com|heroku/i.test(url));
 
 export const pool = new Pool({
   connectionString: process.env.DATABASE_URL,

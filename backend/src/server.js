@@ -54,6 +54,18 @@ app.use(
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok', app: 'anchor' }));
 
+// Diagnostic: verifies the server can actually reach the database.
+app.get('/api/health/db', async (req, res) => {
+  try {
+    const { pool } = await import('./db/pool.js');
+    await pool.query('SELECT 1');
+    res.json({ db: 'ok' });
+  } catch (err) {
+    console.error('[anchor] DB health check failed:', err);
+    res.status(500).json({ db: 'error', code: err.code, message: err.message });
+  }
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/habits', habitRoutes);
 app.use('/api/logs', logRoutes);
