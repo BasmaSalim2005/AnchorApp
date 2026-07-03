@@ -1,0 +1,72 @@
+<div class="tab">
+  <div class="tab-head">
+    <div>
+      <h2>Year in bloom</h2>
+      <p class="sub">Every colored square is a day you showed up.</p>
+    </div>
+    <div class="period-nav">
+      <button type="button" (click)="prev()" aria-label="Previous year">‹</button>
+      <span class="label">{{ year() }}</span>
+      <button type="button" (click)="next()" aria-label="Next year" [disabled]="year() >= 9999">›</button>
+    </div>
+  </div>
+
+  @if (!loaded()) {
+    <p class="muted">Loading…</p>
+  } @else if (habits.habits().length === 0) {
+    <div class="empty card">
+      <div class="empty-emoji">🌱</div>
+      <h3>Plant your first habit</h3>
+      <p>Once you add a habit, your whole year will fill in here — one square at a time.</p>
+      <button class="btn btn-primary" (click)="ui.openCreate()">＋ Add a habit</button>
+    </div>
+  } @else {
+    <div class="year-list">
+      @for (h of habits.habits(); track h.id) {
+        <div class="year-card card">
+          <header class="y-head">
+            <button class="y-title" (click)="ui.openEdit(h)">
+              <span class="dot" [style.background]="h.color">{{ h.icon }}</span>
+              <span class="nm">{{ h.name }}</span>
+            </button>
+            <span class="y-count">
+              <strong [style.color]="h.color">{{ yearCount(h) }}</strong> days
+            </span>
+          </header>
+
+          <div class="heatmap-scroll">
+            <div class="heatmap">
+              <div class="months">
+                @for (lbl of monthLabels(); track lbl.col) {
+                  <span class="m-lbl" [style.grid-column]="lbl.col + 1">{{ lbl.name }}</span>
+                }
+              </div>
+              <div class="weeks">
+                @for (week of weeks(); track $index) {
+                  <div class="week">
+                    @for (cell of week; track cell.key) {
+                      <span
+                        class="sq"
+                        [class.out]="!cell.inYear"
+                        [class.future]="cell.isFuture"
+                        [class.today]="cell.isToday"
+                        [class.filled]="isDone(h, cell.key)"
+                        [style.background]="cell.inYear && isDone(h, cell.key) ? h.color : null"
+                        [title]="cell.key"
+                        (click)="toggle(h, cell)"
+                      ></span>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="legend">
+      <span>Tap any square to mark that day. Scroll sideways on mobile.</span>
+    </div>
+  }
+</div>

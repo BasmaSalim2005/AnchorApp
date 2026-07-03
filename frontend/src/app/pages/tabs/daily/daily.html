@@ -1,0 +1,74 @@
+<div class="tab">
+  <div class="tab-head">
+    <div>
+      <h2>Today</h2>
+      <p class="sub">{{ prettyDate() }}</p>
+    </div>
+    @if (totalCount() > 0) {
+      <div class="progress-ring" [style.--p]="progress()">
+        <div class="ring-inner">
+          <strong>{{ completedCount() }}/{{ totalCount() }}</strong>
+          <span>done</span>
+        </div>
+      </div>
+    }
+  </div>
+
+  @if (!loaded()) {
+    <p class="muted">Loading your habits…</p>
+  } @else if (totalCount() === 0) {
+    <div class="empty card">
+      <div class="empty-emoji">⚓</div>
+      <h3>No habits yet</h3>
+      <p>Drop your first anchor and start a habit that holds.</p>
+      <button class="btn btn-primary" (click)="ui.openCreate()">＋ Add your first habit</button>
+    </div>
+  } @else {
+    <div class="list">
+      @for (h of habits.habits(); track h.id) {
+        <div class="habit-row card" [class.done]="isDone(h)">
+          <button
+            class="check"
+            type="button"
+            [style.borderColor]="h.color"
+            [style.background]="isDone(h) ? h.color : 'transparent'"
+            (click)="toggle(h)"
+            [attr.aria-label]="'Toggle ' + h.name"
+          >
+            @if (isDone(h)) { <span class="tick">✓</span> }
+          </button>
+
+          <span class="h-icon" [style.background]="h.color + '22'">{{ h.icon }}</span>
+
+          <div class="h-main" (click)="toggle(h)">
+            <span class="h-name">{{ h.name }}</span>
+            <span class="h-meta">
+              <span class="badge" [style.background]="h.color + '1f'" [style.color]="h.color">
+                {{ freqLabel(h) }}
+              </span>
+              @if (h.targetQuantity) {
+                <span class="goal">goal: {{ h.targetQuantity }} {{ h.unit }}</span>
+              }
+            </span>
+          </div>
+
+          @if (h.targetQuantity || h.unit) {
+            <div class="qty" (click)="$event.stopPropagation()">
+              <input
+                type="number"
+                min="0"
+                class="input"
+                [value]="quantityOf(h) ?? ''"
+                (change)="setQuantity(h, $any($event.target).value)"
+                placeholder="0"
+              />
+              <span class="unit">{{ h.unit }}</span>
+            </div>
+          }
+
+          <button class="edit" type="button" (click)="ui.openEdit(h)" aria-label="Edit">⋯</button>
+        </div>
+      }
+    </div>
+  }
+</div>

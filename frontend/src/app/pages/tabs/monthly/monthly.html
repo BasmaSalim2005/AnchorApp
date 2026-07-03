@@ -1,0 +1,63 @@
+<div class="tab">
+  <div class="tab-head">
+    <div>
+      <h2>Monthly schedule</h2>
+      <p class="sub">Each habit's own month at a glance.</p>
+    </div>
+    <div class="period-nav">
+      <button type="button" (click)="prev()" aria-label="Previous month">‹</button>
+      <span class="label">{{ monthLabel() }}</span>
+      <button type="button" (click)="next()" aria-label="Next month">›</button>
+      <button class="btn btn-ghost btn-sm today-btn" type="button" (click)="thisMonth()">Today</button>
+    </div>
+  </div>
+
+  @if (!loaded()) {
+    <p class="muted">Loading…</p>
+  } @else if (habits.habits().length === 0) {
+    <div class="empty card">
+      <div class="empty-emoji">🗓️</div>
+      <h3>No habits yet</h3>
+      <p>Add a habit to see its monthly schedule.</p>
+      <button class="btn btn-primary" (click)="ui.openCreate()">＋ Add a habit</button>
+    </div>
+  } @else {
+    <div class="months">
+      @for (h of habits.habits(); track h.id) {
+        <div class="month-card card">
+          <header class="m-head">
+            <button class="m-title" (click)="ui.openEdit(h)">
+              <span class="dot" [style.background]="h.color">{{ h.icon }}</span>
+              <span class="nm">{{ h.name }}</span>
+            </button>
+            <span class="m-count">
+              <strong [style.color]="h.color">{{ monthCount(h) }}</strong> {{ goalLabel(h) }}
+            </span>
+          </header>
+
+          <div class="cal">
+            @for (w of weekdayHeaders; track $index) {
+              <span class="cal-wd">{{ w }}</span>
+            }
+            @for (c of cells(); track $index) {
+              @if (c.key === null) {
+                <span class="cal-pad"></span>
+              } @else {
+                <button
+                  class="cal-day"
+                  [class.today]="c.isToday"
+                  [class.future]="c.isFuture"
+                  [class.filled]="isDone(h, c.key)"
+                  [style.background]="isDone(h, c.key) ? h.color : null"
+                  [style.color]="isDone(h, c.key) ? '#fff' : null"
+                  [disabled]="c.isFuture"
+                  (click)="toggle(h, c)"
+                >{{ c.dayNum }}</button>
+              }
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

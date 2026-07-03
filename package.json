@@ -1,0 +1,16 @@
+{
+  "name": "anchor-app",
+  "version": "1.0.0",
+  "description": "Anchor — build habits that hold. Angular PWA + Express + Postgres.",
+  "private": true,
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "install:all": "npm --prefix backend install && npm --prefix frontend install",
+    "build": "npm --prefix backend install && npm --prefix frontend install && npm --prefix frontend run build",
+    "start": "npm --prefix backend start",
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend start"
+  }
+}

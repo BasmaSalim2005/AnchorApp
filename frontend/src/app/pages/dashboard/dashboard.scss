@@ -1,0 +1,206 @@
+.shell {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 22px;
+  background: linear-gradient(100deg, #0b2a4a, #14406b);
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.brand-text .name {
+  font-weight: 800;
+  font-size: 1.2rem;
+  letter-spacing: 0.5px;
+}
+
+.brand-text .tag {
+  font-size: 0.68rem;
+  color: var(--anchor-red);
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-left: 18px;
+}
+
+.tabs a {
+  color: #cdd9e6;
+  text-decoration: none;
+  font-weight: 650;
+  padding: 8px 16px;
+  border-radius: 9px;
+  font-size: 0.92rem;
+  transition: all 0.15s ease;
+}
+
+.tabs a:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.tabs a.active {
+  background: #fff;
+  color: var(--marine);
+}
+
+.actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.bell {
+  border: none;
+  background: rgba(255, 255, 255, 0.12);
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  font-size: 1.1rem;
+}
+
+.add-btn .plus {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.user {
+  position: relative;
+}
+
+.avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  background: var(--anchor-red);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.menu {
+  position: absolute;
+  right: 0;
+  top: 48px;
+  width: 220px;
+  padding: 8px;
+  color: var(--ink);
+}
+
+.menu-head {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 6px;
+}
+
+.menu-head strong {
+  color: var(--marine);
+}
+
+.menu-head span {
+  font-size: 0.8rem;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.menu button {
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: transparent;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  color: var(--anchor-red);
+}
+
+.menu button:hover {
+  background: var(--anchor-red-soft);
+}
+
+.content {
+  flex: 1;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 22px 40px;
+}
+
+/* Mobile tab bar hidden on desktop */
+.mobile-tabs {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .topbar .tabs {
+    display: none;
+  }
+  .brand-text .tag {
+    display: none;
+  }
+  .add-btn span:not(.plus) {
+    display: none;
+  }
+  .content {
+    padding: 16px 14px 90px;
+  }
+
+  .mobile-tabs {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-top: 1px solid var(--line);
+    z-index: 30;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .mobile-tabs a {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 9px 0 8px;
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.72rem;
+    font-weight: 650;
+  }
+  .mobile-tabs a span {
+    font-size: 1.15rem;
+  }
+  .mobile-tabs a.active {
+    color: var(--anchor-red);
+  }
+}

@@ -1,0 +1,165 @@
+.onboard {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+}
+
+/* ---- Brand side ---- */
+.brand {
+  position: relative;
+  background: radial-gradient(120% 120% at 0% 0%, #14406b 0%, #0b2a4a 55%, #071d34 100%);
+  color: #fff;
+  padding: 48px 56px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.brand::after {
+  /* subtle rope/wave texture line */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 22px 22px;
+  pointer-events: none;
+}
+
+.brand-inner {
+  position: relative;
+  max-width: 520px;
+  z-index: 1;
+}
+
+.logo-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 40px;
+}
+
+.wordmark h1 {
+  font-size: 2.6rem;
+  letter-spacing: 1px;
+}
+
+.slogan {
+  margin: 4px 0 0;
+  color: var(--anchor-red);
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: lowercase;
+  font-size: 0.95rem;
+}
+
+.pitch h2 {
+  font-size: 1.9rem;
+  margin-bottom: 16px;
+  color: #fff;
+}
+
+.pitch p {
+  color: #cdd9e6;
+  line-height: 1.65;
+  margin: 0 0 14px;
+  font-size: 1.02rem;
+}
+
+.pitch strong {
+  color: #fff;
+}
+
+.features {
+  list-style: none;
+  padding: 0;
+  margin: 26px 0 0;
+  display: grid;
+  gap: 12px;
+}
+
+.features li {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-size: 0.95rem;
+}
+
+.footnote {
+  margin-top: 36px;
+  color: var(--anchor-red);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* ---- Auth side ---- */
+.auth {
+  background: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 28px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 380px;
+}
+
+.tabs {
+  display: flex;
+  background: #eef1f5;
+  border-radius: 12px;
+  padding: 5px;
+  margin-bottom: 26px;
+}
+
+.tabs button {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 10px;
+  border-radius: 9px;
+  font-weight: 650;
+  color: var(--muted);
+  transition: all 0.15s ease;
+}
+
+.tabs button.active {
+  background: #fff;
+  color: var(--marine);
+  box-shadow: var(--shadow-sm);
+}
+
+.auth-title {
+  font-size: 1.4rem;
+  color: var(--marine);
+  margin-bottom: 22px;
+}
+
+.switch-hint {
+  text-align: center;
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* ---- Responsive: stack on mobile ---- */
+@media (max-width: 880px) {
+  .onboard {
+    grid-template-columns: 1fr;
+  }
+  .brand {
+    padding: 36px 28px;
+  }
+  .features {
+    display: none;
+  }
+  .pitch h2 {
+    font-size: 1.5rem;
+  }
+  .auth {
+    padding: 28px 22px 48px;
+  }
+}

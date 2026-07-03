@@ -1,0 +1,71 @@
+<div class="tab">
+  <div class="tab-head">
+    <div>
+      <h2>This week</h2>
+      <p class="sub">Tap a square to mark a day done.</p>
+    </div>
+    <div class="period-nav">
+      <button type="button" (click)="prev()" aria-label="Previous week">‹</button>
+      <span class="label">{{ rangeLabel() }}</span>
+      <button type="button" (click)="next()" aria-label="Next week">›</button>
+      <button class="btn btn-ghost btn-sm today-btn" type="button" (click)="thisWeek()">Today</button>
+    </div>
+  </div>
+
+  @if (!loaded()) {
+    <p class="muted">Loading…</p>
+  } @else if (habits.habits().length === 0) {
+    <div class="empty card">
+      <div class="empty-emoji">📅</div>
+      <h3>No habits to show</h3>
+      <p>Add a habit to start filling in your week.</p>
+      <button class="btn btn-primary" (click)="ui.openCreate()">＋ Add a habit</button>
+    </div>
+  } @else {
+    <div class="grid-wrap card">
+      <table class="grid">
+        <thead>
+          <tr>
+            <th class="habit-col"></th>
+            @for (d of days(); track d.key) {
+              <th [class.today]="d.isToday">
+                <span class="wd">{{ d.weekday }}</span>
+                <span class="dn">{{ d.dayNum }}</span>
+              </th>
+            }
+            <th class="count-col">Done</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (h of habits.habits(); track h.id) {
+            <tr>
+              <td class="habit-col">
+                <button class="habit-label" (click)="ui.openEdit(h)">
+                  <span class="dot" [style.background]="h.color">{{ h.icon }}</span>
+                  <span class="nm">{{ h.name }}</span>
+                </button>
+              </td>
+              @for (d of days(); track d.key) {
+                <td>
+                  <button
+                    class="cell"
+                    [class.future]="d.isFuture"
+                    [class.filled]="isDone(h, d.key)"
+                    [style.background]="isDone(h, d.key) ? h.color : null"
+                    [disabled]="d.isFuture"
+                    (click)="toggle(h, d)"
+                    [attr.aria-label]="h.name + ' ' + d.key"
+                  ></button>
+                </td>
+              }
+              <td class="count-col">
+                <span class="count" [style.color]="h.color">{{ weekCount(h) }}</span>
+                @if (h.frequency === 'weekly') { <span class="of">/ {{ h.targetCount }}</span> }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

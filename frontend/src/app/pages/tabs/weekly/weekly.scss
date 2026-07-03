@@ -1,0 +1,115 @@
+.today-btn {
+  margin-left: 6px;
+}
+
+.grid-wrap {
+  padding: 8px;
+  overflow-x: auto;
+}
+
+.grid {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.grid th,
+.grid td {
+  text-align: center;
+  padding: 7px 5px;
+}
+
+.grid thead th {
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.grid thead th.today .dn {
+  background: var(--anchor-red);
+  color: #fff;
+  border-radius: 50%;
+  padding: 1px 6px;
+}
+
+.grid thead th .wd {
+  display: block;
+}
+
+.grid thead th .dn {
+  display: inline-block;
+  margin-top: 2px;
+  font-size: 0.85rem;
+  color: var(--marine);
+}
+
+.habit-col {
+  text-align: left !important;
+  min-width: 150px;
+}
+
+.habit-label {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border: none;
+  background: transparent;
+  padding: 4px;
+  width: 100%;
+  text-align: left;
+}
+
+.habit-label .dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-size: 0.95rem;
+  flex: none;
+}
+
+.habit-label .nm {
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 0.92rem;
+}
+
+.cell {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1.5px solid var(--line);
+  background: #f3f5f8;
+  transition: transform 0.08s ease, box-shadow 0.12s ease;
+}
+
+.cell:hover:not(.future) {
+  box-shadow: 0 0 0 2px rgba(31, 111, 235, 0.2);
+}
+
+.cell:active:not(.future) {
+  transform: scale(0.9);
+}
+
+.cell.filled {
+  border-color: transparent;
+}
+
+.cell.future {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.count-col {
+  min-width: 56px;
+}
+
+.count {
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.of {
+  color: var(--muted);
+  font-size: 0.8rem;
+}

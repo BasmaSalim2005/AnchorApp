@@ -1,0 +1,23 @@
+# Render blueprint for Anchor (single web service: Express serves the Angular PWA).
+# Deploy: push to GitHub, then in Render -> New -> Blueprint, pick this repo.
+services:
+  - type: web
+    name: anchor
+    runtime: node
+    plan: free
+    buildCommand: npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SESSION_SECURE
+        value: "true"
+      - key: DATABASE_SSL
+        value: "true"
+      # Paste your Supabase Session pooler connection string in the Render dashboard.
+      - key: DATABASE_URL
+        sync: false
+      # A strong secret is generated for you.
+      - key: SESSION_SECRET
+        generateValue: true

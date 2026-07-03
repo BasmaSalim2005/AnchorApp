@@ -1,0 +1,28 @@
+{
+  "name": "anchor-backend",
+  "version": "1.0.0",
+  "description": "Anchor - build habits that hold. Express + PostgreSQL backend.",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "migrate": "node src/db/migrate.js"
+  },
+  "keywords": [
+    "habits",
+    "anchor",
+    "express",
+    "postgres"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "connect-pg-simple": "^9.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "pg": "^8.12.0"
+  }
+}

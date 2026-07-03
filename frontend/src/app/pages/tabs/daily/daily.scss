@@ -1,0 +1,151 @@
+.progress-ring {
+  --p: 0;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: conic-gradient(var(--anchor-red) calc(var(--p) * 1%), #e9edf2 0);
+  display: grid;
+  place-items: center;
+}
+
+.ring-inner {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #fff;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  line-height: 1;
+}
+
+.ring-inner strong {
+  color: var(--marine);
+  font-size: 0.95rem;
+}
+
+.ring-inner span {
+  font-size: 0.62rem;
+  color: var(--muted);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.habit-row {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 12px 14px;
+  transition: background 0.15s ease;
+}
+
+.habit-row.done {
+  background: #fbfdfb;
+}
+
+.check {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2.5px solid;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  transition: all 0.15s ease;
+}
+
+.check .tick {
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.h-icon {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  font-size: 1.25rem;
+}
+
+.h-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+  min-width: 0;
+}
+
+.h-name {
+  font-weight: 650;
+  color: var(--ink);
+}
+
+.habit-row.done .h-name {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+
+.h-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.goal {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.qty {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex: none;
+}
+
+.qty .input {
+  width: 66px;
+  padding: 7px 8px;
+  text-align: center;
+}
+
+.qty .unit {
+  font-size: 0.78rem;
+  color: var(--muted);
+  min-width: 24px;
+}
+
+.edit {
+  flex: none;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 1.3rem;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+}
+
+.edit:hover {
+  background: #eef1f5;
+  color: var(--marine);
+}
+
+@media (max-width: 560px) {
+  .qty .input {
+    width: 56px;
+  }
+  .h-icon {
+    width: 36px;
+    height: 36px;
+  }
+}

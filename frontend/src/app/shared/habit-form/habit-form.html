@@ -1,0 +1,147 @@
+@if (ui.formOpen()) {
+  <div class="overlay" (click)="close()">
+    <div class="sheet card" (click)="$event.stopPropagation()">
+      <header class="sheet-head">
+        <h3>{{ isEdit() ? 'Edit habit' : 'New habit' }}</h3>
+        <button class="icon-btn" type="button" (click)="close()" aria-label="Close">✕</button>
+      </header>
+
+      <div class="sheet-body">
+        <!-- Preview -->
+        <div class="preview" [style.background]="color + '18'" [style.borderColor]="color">
+          <span class="preview-icon" [style.background]="color">{{ icon }}</span>
+          <span class="preview-name">{{ name || 'Your habit' }}</span>
+        </div>
+
+        <div class="field">
+          <label for="hname">Name</label>
+          <input id="hname" name="hname" class="input" [(ngModel)]="name" placeholder="e.g. Drink water" />
+        </div>
+
+        <div class="field">
+          <label>Icon</label>
+          <div class="picker icon-picker">
+            @for (ic of icons; track ic) {
+              <button
+                type="button"
+                class="chip"
+                [class.selected]="icon === ic"
+                (click)="icon = ic"
+              >{{ ic }}</button>
+            }
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Color</label>
+          <div class="picker color-picker">
+            @for (c of colors; track c) {
+              <button
+                type="button"
+                class="swatch"
+                [class.selected]="color === c"
+                [style.background]="c"
+                (click)="color = c"
+                [attr.aria-label]="c"
+              ></button>
+            }
+            <input class="color-native" type="color" [(ngModel)]="color" name="customColor" title="Custom color" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="freq">Frequency</label>
+          <select id="freq" name="freq" class="input" [(ngModel)]="frequency">
+            <option value="daily">Daily — every day</option>
+            <option value="weekly">Weekly — a few times a week</option>
+            <option value="monthly">Monthly — a few times a month</option>
+          </select>
+        </div>
+
+        @if (frequency !== 'daily') {
+          <div class="field">
+            <label for="count">Target</label>
+            <div class="inline">
+              <input
+                id="count"
+                name="count"
+                type="number"
+                min="1"
+                max="31"
+                class="input small"
+                [(ngModel)]="targetCount"
+              />
+              <span class="inline-label">{{ countLabel }}</span>
+            </div>
+          </div>
+        }
+
+        <!-- Measurable toggle -->
+        <div class="toggle-row">
+          <div>
+            <strong>Track a quantity</strong>
+            <p class="hint">e.g. 2000 ml of water, 5 km running, 20 reps</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" [checked]="measurable()" (change)="measurable.set(!measurable())" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        @if (measurable()) {
+          <div class="inline gap">
+            <div class="field grow">
+              <label for="target">Daily goal</label>
+              <input id="target" name="target" type="number" min="0" class="input" [(ngModel)]="targetQuantity" placeholder="2000" />
+            </div>
+            <div class="field grow">
+              <label for="unit">Unit</label>
+              <input id="unit" name="unit" class="input" [(ngModel)]="unit" list="unit-list" placeholder="ml" />
+              <datalist id="unit-list">
+                @for (u of units; track u) {
+                  <option [value]="u"></option>
+                }
+              </datalist>
+            </div>
+          </div>
+        }
+
+        <!-- Reminder -->
+        <div class="toggle-row">
+          <div>
+            <strong>Daily reminder</strong>
+            <p class="hint">A gentle nudge while Anchor is open</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" [(ngModel)]="reminderEnabled" name="rem" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        @if (reminderEnabled) {
+          <div class="field">
+            <label for="rtime">Remind me at</label>
+            <input id="rtime" name="rtime" type="time" class="input" [(ngModel)]="reminderTime" />
+          </div>
+        }
+
+        @if (error()) {
+          <p class="error-text">{{ error() }}</p>
+        }
+      </div>
+
+      <footer class="sheet-foot">
+        @if (isEdit()) {
+          <button class="btn btn-ghost danger" type="button" (click)="deleteHabit()" [disabled]="saving()">
+            Delete
+          </button>
+        }
+        <div class="spacer"></div>
+        <button class="btn btn-ghost" type="button" (click)="close()" [disabled]="saving()">Cancel</button>
+        <button class="btn btn-primary" type="button" (click)="save()" [disabled]="saving()">
+          {{ saving() ? 'Saving…' : (isEdit() ? 'Save changes' : 'Add habit') }}
+        </button>
+      </footer>
+    </div>
+  </div>
+}

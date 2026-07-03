@@ -1,0 +1,57 @@
+<div class="shell">
+  <header class="topbar">
+    <div class="brand">
+      <anchor-logo [size]="36" color="#ffffff" ring="#c8102e" />
+      <div class="brand-text">
+        <span class="name">Anchor</span>
+        <span class="tag">build habits that hold</span>
+      </div>
+    </div>
+
+    <nav class="tabs">
+      <a routerLink="/app/daily" routerLinkActive="active">Daily</a>
+      <a routerLink="/app/weekly" routerLinkActive="active">Weekly</a>
+      <a routerLink="/app/monthly" routerLinkActive="active">Monthly</a>
+      <a routerLink="/app/yearly" routerLinkActive="active">Yearly</a>
+    </nav>
+
+    <div class="actions">
+      @if (notify.supported && notifState() !== 'granted') {
+        <button class="bell" type="button" title="Enable reminders" (click)="enableReminders()">
+          🔔
+        </button>
+      }
+      <button class="btn btn-primary btn-sm add-btn" type="button" (click)="ui.openCreate()">
+        <span class="plus">＋</span> New habit
+      </button>
+      <div class="user">
+        <button class="avatar" type="button" (click)="menuOpen.set(!menuOpen())">
+          {{ (auth.user()?.username ?? '?').charAt(0).toUpperCase() }}
+        </button>
+        @if (menuOpen()) {
+          <div class="menu card" (click)="menuOpen.set(false)">
+            <div class="menu-head">
+              <strong>{{ auth.user()?.username }}</strong>
+              <span>{{ auth.user()?.email }}</span>
+            </div>
+            <button type="button" (click)="logout()">Log out</button>
+          </div>
+        }
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile tab bar -->
+  <nav class="mobile-tabs">
+    <a routerLink="/app/daily" routerLinkActive="active"><span>✓</span>Daily</a>
+    <a routerLink="/app/weekly" routerLinkActive="active"><span>📅</span>Weekly</a>
+    <a routerLink="/app/monthly" routerLinkActive="active"><span>🗓️</span>Monthly</a>
+    <a routerLink="/app/yearly" routerLinkActive="active"><span>🌱</span>Yearly</a>
+  </nav>
+
+  <main class="content">
+    <router-outlet />
+  </main>
+
+  <app-habit-form />
+</div>

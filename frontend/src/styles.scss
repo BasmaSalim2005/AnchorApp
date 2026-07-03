@@ -1,0 +1,272 @@
+/* Anchor — global styles & nautical theme
+   build habits that hold */
+
+:root {
+  /* Brand palette: boat / nautical — red, white, marine blue */
+  --anchor-red: #c8102e;
+  --anchor-red-dark: #9e0c24;
+  --anchor-red-soft: #f7dde1;
+  --marine: #0b2a4a;
+  --marine-light: #14406b;
+  --marine-accent: #1f6feb;
+  --white: #ffffff;
+  --cream: #fbf7f2;
+  --ink: #14202e;
+  --muted: #6b7a8d;
+  --line: #e3e8ef;
+  --rope: #d9c4a3;
+
+  --ok: #2e9e5b;
+  --warn: #e0a106;
+
+  --radius: 14px;
+  --radius-sm: 9px;
+  --shadow-sm: 0 1px 2px rgba(11, 42, 74, 0.08), 0 1px 3px rgba(11, 42, 74, 0.06);
+  --shadow-md: 0 6px 20px rgba(11, 42, 74, 0.12);
+  --shadow-lg: 0 18px 50px rgba(11, 42, 74, 0.22);
+
+  --font: 'Segoe UI', system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font);
+  color: var(--ink);
+  background: var(--cream);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  line-height: 1.15;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+a {
+  color: var(--marine-accent);
+}
+
+/* ---- Buttons ---- */
+.btn {
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 12px 18px;
+  font-size: 0.95rem;
+  font-weight: 650;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: transform 0.05s ease, background 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--anchor-red);
+  color: #fff;
+  box-shadow: var(--shadow-sm);
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--anchor-red-dark);
+}
+
+.btn-marine {
+  background: var(--marine);
+  color: #fff;
+}
+.btn-marine:hover:not(:disabled) {
+  background: var(--marine-light);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--marine);
+  border: 1.5px solid var(--line);
+}
+.btn-ghost:hover:not(:disabled) {
+  border-color: var(--marine);
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn-sm {
+  padding: 7px 12px;
+  font-size: 0.85rem;
+}
+
+/* ---- Form fields ---- */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.field label {
+  font-size: 0.82rem;
+  font-weight: 650;
+  color: var(--marine);
+}
+
+.input,
+select.input,
+textarea.input {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--ink);
+  background: #fff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.input:focus,
+select.input:focus {
+  outline: none;
+  border-color: var(--marine-accent);
+  box-shadow: 0 0 0 3px rgba(31, 111, 235, 0.15);
+}
+
+.error-text {
+  color: var(--anchor-red);
+  font-size: 0.82rem;
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ---- Shared tab layout ---- */
+.tab-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+
+.tab-head h2 {
+  font-size: 1.6rem;
+  color: var(--marine);
+}
+
+.tab-head .sub {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.empty {
+  text-align: center;
+  padding: 48px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.empty-emoji {
+  font-size: 3rem;
+}
+
+.empty h3 {
+  color: var(--marine);
+  font-size: 1.3rem;
+}
+
+.empty p {
+  color: var(--muted);
+  margin: 0 0 12px;
+}
+
+/* Period switcher used by weekly/monthly/yearly tabs */
+.period-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.period-nav button {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  border: 1.5px solid var(--line);
+  background: #fff;
+  color: var(--marine);
+  font-size: 1.1rem;
+}
+
+.period-nav button:hover:not(:disabled) {
+  border-color: var(--marine);
+}
+
+.period-nav .label {
+  min-width: 150px;
+  text-align: center;
+  font-weight: 700;
+  color: var(--marine);
+}
+
+/* Scrollbar polish */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: #cdd6e0;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #b5c0cd;
+}

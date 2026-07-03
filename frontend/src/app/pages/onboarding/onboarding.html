@@ -1,0 +1,124 @@
+<div class="onboard">
+  <!-- Brand / story side -->
+  <section class="brand">
+    <div class="brand-inner">
+      <div class="logo-row">
+        <anchor-logo [size]="68" color="#ffffff" ring="#c8102e" />
+        <div class="wordmark">
+          <h1>Anchor</h1>
+          <p class="slogan">build habits that hold</p>
+        </div>
+      </div>
+
+      <div class="pitch">
+        <h2>Go beyond the seed.</h2>
+        <p>
+          We all start habits full of hope — then day two arrives and the
+          motivation drifts away. Most habits never make it past the seed.
+        </p>
+        <p>
+          <strong>Anchor</strong> holds you steady through the wobbly early days,
+          so your habits don't float off with the tide. Keep showing up, watch
+          the streak grow, and see your habit <em>bloom</em> — not just the seed.
+        </p>
+        <ul class="features">
+          <li>⚓ Anchor daily, weekly &amp; monthly habits</li>
+          <li>🗓️ See your whole year bloom in colored squares</li>
+          <li>💧 Track quantities — water, distance, reps &amp; more</li>
+          <li>🔔 Gentle reminders so you never miss day two</li>
+        </ul>
+      </div>
+
+      <p class="footnote">Stay anchored. Watch it bloom.</p>
+    </div>
+  </section>
+
+  <!-- Auth side -->
+  <section class="auth">
+    <div class="auth-card">
+      <div class="tabs">
+        <button
+          type="button"
+          [class.active]="mode() === 'login'"
+          (click)="switchMode('login')"
+        >
+          Log in
+        </button>
+        <button
+          type="button"
+          [class.active]="mode() === 'register'"
+          (click)="switchMode('register')"
+        >
+          Create account
+        </button>
+      </div>
+
+      <h3 class="auth-title">
+        {{ mode() === 'login' ? 'Welcome back, sailor' : 'Drop your first anchor' }}
+      </h3>
+
+      <form (ngSubmit)="submit()">
+        <div class="field">
+          <label for="username">Username</label>
+          <input
+            id="username"
+            name="username"
+            class="input"
+            [(ngModel)]="username"
+            autocomplete="username"
+            placeholder="your_handle"
+          />
+        </div>
+
+        @if (mode() === 'register') {
+          <div class="field">
+            <label for="email">Email</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              class="input"
+              [(ngModel)]="email"
+              autocomplete="email"
+              placeholder="you@example.com"
+            />
+          </div>
+        }
+
+        <div class="field">
+          <label for="password">Password</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            class="input"
+            [(ngModel)]="password"
+            [autocomplete]="mode() === 'login' ? 'current-password' : 'new-password'"
+            placeholder="••••••••"
+          />
+          @if (mode() === 'register') {
+            <span class="hint">At least 8 characters, with a letter and a number.</span>
+          }
+        </div>
+
+        @if (error()) {
+          <p class="error-text">{{ error() }}</p>
+        }
+
+        <button class="btn btn-primary btn-block" type="submit" [disabled]="loading()">
+          {{ loading() ? 'Please wait…' : (mode() === 'login' ? 'Log in' : 'Create account') }}
+        </button>
+      </form>
+
+      <p class="switch-hint">
+        @if (mode() === 'login') {
+          New here?
+          <a href="javascript:void(0)" (click)="switchMode('register')">Create an account</a>
+        } @else {
+          Already anchored?
+          <a href="javascript:void(0)" (click)="switchMode('login')">Log in</a>
+        }
+      </p>
+    </div>
+  </section>
+</div>
